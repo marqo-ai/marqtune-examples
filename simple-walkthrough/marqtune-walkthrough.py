@@ -12,7 +12,7 @@ print(f"Using suffix={suffix} for this walkthrough")
 
 # Change this to your Marqo API Key:
 # To find your API Key, go to Marqo Cloud and click 'Api Keys' from the lefthand side navigation bar
-api_key = os.getenv('MARQTUNE_API_KEY')    # alternatively, api_key = "..."
+api_key = os.getenv('MARQO_API_KEY')    # alternatively, api_key = "..."
 
 # Set up the Marqtune client
 marqtune_client = Client(url="https://marqtune.marqo.ai", api_key=api_key)
