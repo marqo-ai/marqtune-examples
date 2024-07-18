@@ -10,7 +10,8 @@ import os
 suffix = str(uuid.uuid4())[:8]
 print(f"Using suffix={suffix} for this walkthrough")
 
-# Change this to your API Key:
+# Change this to your Marqo API Key:
+# To find your API Key, go to Marqo Cloud and click 'Api Keys' from the lefthand side navigation bar
 api_key = os.getenv('MARQTUNE_API_KEY')    # alternatively, api_key = "..."
 
 # Set up the Marqtune client
@@ -18,11 +19,15 @@ marqtune_client = Client(url="https://marqtune.marqo.ai", api_key=api_key)
 
 # Downloading the data files needed for this walkthrough
 print("Downloading data files:")
+# The path to our datasets
 base_path = (
     "https://marqo-gcl-public.s3.us-west-2.amazonaws.com/marqtune_test/datasets/v1"
 )
+# Our training and evaluation data
 training_data = "gs_100k_training.csv"
 eval_data = "gs_25k_eval.csv"
+
+# Download the datasets
 open(training_data, "w").write(
     gzip.open(urlopen(f"{base_path}/{training_data}.gz"), "rb").read().decode("utf-8")
 )
@@ -31,7 +36,7 @@ open(eval_data, "w").write(
 )
 
 # To be able to create datasets in Marqtune, we first need to identify the columns in the CSVs 
-# as well as their types by defining a data schema.
+# as well as their types by defining a data schema
 data_schema = {
     "query": "text",
     "title": "text",
@@ -39,7 +44,7 @@ data_schema = {
     "score": "score",
 }
 
-# Create the training dataset.
+# Create the training dataset
 training_dataset_name = f"{training_data}-{suffix}"
 print(f"Creating training dataset ({training_dataset_name}):")
 training_dataset = marqtune_client.create_dataset(
@@ -53,7 +58,7 @@ training_dataset = marqtune_client.create_dataset(
     wait_for_completion=True,
 )
 
-# Similarly we create the Evaluation dataset.
+# Similarly we create the Evaluation dataset
 eval_dataset_name = f"{eval_data}-{suffix}"
 print(f"Creating evaluation dataset ({eval_dataset_name}):")
 eval_dataset = marqtune_client.create_dataset(
@@ -66,7 +71,7 @@ eval_dataset = marqtune_client.create_dataset(
     wait_for_completion=True,
 )
 
-# Setup training hyper parameters:
+# Setup training hyperparameters
 training_params = {
     "leftKeys": ["query"],
     "leftWeights": [1],
@@ -126,7 +131,6 @@ tuned_model_eval = marqtune_client.evaluate(
     hyperparameters=eval_params,
     wait_for_completion=True,
 )
-
 
 # Convenience function to inspect evaluation logs and extract the results
 def print_eval_results(description, evaluation):
