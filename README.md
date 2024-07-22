@@ -6,7 +6,7 @@ This repository contains examples for using [Marqtune](https://cloud.marqo.ai/ma
 To use Marqtune you will need:
 
 - Python (3.11+)
-- A [Marqo API key](https://cloud.marqo.ai/settings/api-keys/) with access to Marqtune. To obtain this, sign up to [Marqo Cloud](https://cloud.marqo.ai/authentication/register/) and navigate to the [API keys](https://cloud.marqo.ai/settings/api-keys/) section and create your own. For more information, see this [article](https://www.marqo.ai/cloud/getting-started-on-marqo-cloud#:~:text=cannot%20be%20undone.-,Making%20an%20API%C2%A0Key,-You%20can%20managed).
+- A [Marqo API key](https://cloud.marqo.ai/settings/api-keys/) with access to Marqtune. To obtain this, sign up to [Marqo Cloud](https://cloud.marqo.ai/authentication/register/) and navigate to the [API keys](https://cloud.marqo.ai/settings/api-keys/) section and create your own. For more information, see this [article](https://marqo.ai/blog/finding-my-marqo-api-key).
 - The Marqtune Python client. You can install this using pip:
     ```bash
     pip install marqtune
