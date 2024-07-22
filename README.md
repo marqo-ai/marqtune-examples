@@ -21,4 +21,4 @@ We have an [article](https://marqo.ai/blog/getting-started-with-marqtune) that w
 
 [Documentation](https://docs.marqo.ai/2.10/Marqtune/what_is_finetuning/)
 
-[Marqtune Walkthrough Article]([https://marqo.ai/blog](https://marqo.ai/blog/getting-started-with-marqtune))
+[Marqtune Walkthrough Article](https://marqo.ai/blog/getting-started-with-marqtune)
