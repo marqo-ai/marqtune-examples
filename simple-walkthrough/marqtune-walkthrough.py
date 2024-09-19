@@ -1,5 +1,5 @@
 from marqtune.client import Client
-from marqtune.enums import DatasetType, ModelType, InstanceType
+from marqtune.enums import DatasetType, InstanceType
 from urllib.request import urlopen
 import gzip
 import json
@@ -10,11 +10,8 @@ import os
 suffix = str(uuid.uuid4())[:8]
 print(f"Using suffix={suffix} for this walkthrough")
 
-# Change this to your Marqo API Key:
+# Set up Marqtune Client
 # To find your API Key, go to Marqo Cloud and click 'Api Keys' from the lefthand side navigation bar
-api_key = os.getenv('MARQO_API_KEY')    # alternatively, api_key = "..."
-
-# Set up the Marqtune client
 marqtune_client = Client(url="https://marqtune.marqo.ai", api_key=api_key)
 
 # Downloading the data files needed for this walkthrough
@@ -86,15 +83,11 @@ base_model = "ViT-B-32"
 base_checkpoint = "laion400m_e31"
 model_name = f"{training_data}-model-{suffix}"
 print(f"Training a new model ({model_name}):")
-
-# Train the base model
 tuned_model = marqtune_client.train_model(
     dataset_id=training_dataset.dataset_id,
     model_name=f"{training_data}-model-{suffix}",
-    instance_type=InstanceType.BASIC,   # You may wish to change this to InstanceType.PERFORMANCE to run faster
-    base_model="ViT-B-32",
-    base_checkpoint="laion400m_e31",
-    model_type=ModelType.OPEN_CLIP,
+    instance_type=InstanceType.BASIC,
+    base_model=f"Marqo/{base_model}.{base_checkpoint}"
     hyperparameters=training_params,
     wait_for_completion=True,
 )
@@ -112,22 +105,17 @@ eval_params = {
 print("Evaluating the base model:")
 base_model_eval = marqtune_client.evaluate(
     dataset_id=eval_dataset.dataset_id,
-    model=base_model,
-    checkpoint=base_checkpoint,
-    model_type=ModelType.OPEN_CLIP,
+    model=f"Marqo/{base_model}.{base_checkpoint}",
     hyperparameters=eval_params,
     wait_for_completion=True,
 )
 
-# Evaluating the fine-tuned model using Marqtune's evaluate feature
 print("Evaluating the tuned model:")
 tuned_model_id = tuned_model.model_id
 tuned_checkpoint = tuned_model.describe()["checkpoints"][-1]
 tuned_model_eval = marqtune_client.evaluate(
     dataset_id=eval_dataset.dataset_id,
-    model=tuned_model_id,
-    checkpoint=tuned_checkpoint,
-    model_type=ModelType.MARQTUNED,
+    model=f{tuned_model_id}/{tuned_checkpoint},
     hyperparameters=eval_params,
     wait_for_completion=True,
 )
