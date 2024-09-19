@@ -11,7 +11,8 @@ suffix = str(uuid.uuid4())[:8]
 print(f"Using suffix={suffix} for this walkthrough")
 
 # Set up Marqtune Client
-# To find your API Key, go to Marqo Cloud and click 'Api Keys' from the lefthand side navigation bar
+
+# To find your API Key, go to Marqo Cloud and click 'API Keys' from the lefthand side navigation bar or visit https://www.marqo.ai/blog/finding-my-marqo-api-key
 marqtune_client = Client(url="https://marqtune.marqo.ai", api_key=api_key)
 
 # Downloading the data files needed for this walkthrough
