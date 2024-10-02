@@ -81,14 +81,14 @@ training_params = {
 
 # Define base model features
 base_model = "ViT-B-32"
-base_checkpoint = "laion400m_e31"
+base_checkpoint = "laion2b_s34b_b79k"
 model_name = f"{training_data}-model-{suffix}"
 print(f"Training a new model ({model_name}):")
 tuned_model = marqtune_client.train_model(
     dataset_id=training_dataset.dataset_id,
     model_name=f"{training_data}-model-{suffix}",
     instance_type=InstanceType.BASIC,
-    base_model=f"Marqo/{base_model}.{base_checkpoint}"
+    base_model=f"Marqo/{base_model}.{base_checkpoint}",
     hyperparameters=training_params,
     wait_for_completion=True,
 )
@@ -116,7 +116,7 @@ tuned_model_id = tuned_model.model_id
 tuned_checkpoint = tuned_model.describe()["checkpoints"][-1]
 tuned_model_eval = marqtune_client.evaluate(
     dataset_id=eval_dataset.dataset_id,
-    model=f{tuned_model_id}/{tuned_checkpoint},
+    model=f"{tuned_model_id}/{tuned_checkpoint}",
     hyperparameters=eval_params,
     wait_for_completion=True,
 )
